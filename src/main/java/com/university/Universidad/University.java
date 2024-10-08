@@ -195,4 +195,5 @@ public class University {
     public String toString() {
         return String.format("University: %s", m_universityName);
     }
+
 }
