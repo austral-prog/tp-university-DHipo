@@ -2,22 +2,37 @@ package com.university;
 
 import com.university.Universidad.University;
 
-import java.util.List;
-import java.util.Map;
+import java.io.PrintStream;
+
+import static com.university.Solution.exerciseOne;
 
 public class App {
+
+    static
+    {
+        setLog(false);
+    }
+
     public static void main(String[] args)
     {
         University university = new University();
-        Map<String, List<String>> data = CSVManager.getDataFromFileAsMap("src/main/resources/input.csv");
 
-        assert data != null;
-        data.forEach((k, v) -> System.out.printf("%s: %d\n", k, v.size()));
+        if (exerciseOne(university))
+            System.out.println("The exercise one was done correctly!");
+        else
+            System.out.println("The exercise one was not done correctly!");
 
-        if (university.importDataFromCSV("src/main/resources/input.csv"))
-            System.out.print("Data from CSV imported correctly!\n");
+    }
 
-        if (university.extractStudentsWithCourses("src/main/resources/solution.csv"))
-            System.out.print("Data from CSV extracted correctly!\n\t-> Name of the file \"solution.csv\"\n");
+    private static void setLog(final boolean _enable)
+    {
+        if (_enable) {
+            System.setOut(System.out);
+            return;
+        }
+
+        System.setOut(new PrintStream(new java.io.OutputStream() {
+            public void write(int b) {}
+        }));
     }
 }

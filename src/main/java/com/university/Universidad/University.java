@@ -24,34 +24,76 @@ public class University {
     private Map<String, Student> m_students = new HashMap<String, Student>();
     private Map<String, Teacher> m_teachers = new HashMap<>();
 
+    /* ----- CONSTRUCTOR ----- */
     public University()
     {
         System.out.println("new University was created!\n\t-> Name: " + m_universityName);
     };
 
     /* ----- GETTERS ----- */
-
     public Map<String, Course> getCourses() { return m_courses; }
     public Map<String, Student> getStudents() { return m_students; }
     public Map<String, Teacher> getTeachers() { return m_teachers; }
     public String getUniversityName() { return m_universityName; }
 
-    /* ----- Private : METHODS ----- */
-
-    private boolean checkStudentInUniversity(final String _studentName) { return m_students.containsKey(_studentName); }
-
-    private boolean checkSubjectInCourses(final String _subject)
-    {
-        return m_courses.containsKey(_subject);
+    public <T> boolean inUniversity (final T _element) {
+        String className = _element.getClass().getSimpleName();
+        return switch (className) {
+            case "Student" -> {
+                Student s = (Student) _element;
+                yield m_students.containsKey(s.getName());
+            }
+            case "Teacher" -> {
+                Teacher t = (Teacher) _element;
+                yield m_teachers.containsKey(t.getName());
+            }
+            case "Course" -> {
+                Course c = (Course) _element;
+                yield m_courses.containsKey(c.getName());
+            }
+            default -> false;
+        };
     }
 
-    private boolean checkTeacherInUniversity(final String _teacherName)
-    {
-        return m_teachers.containsKey(_teacherName);
+    public <T> T getInUniversity (final T _element) {
+        String className = _element.getClass().getSimpleName();
+        return switch (className) {
+            case "Student" -> {
+                Student s = (Student) _element;
+                yield (T) m_students.get(s.getName());
+            }
+            case "Teacher" -> {
+                Teacher t = (Teacher) _element;
+                yield (T) m_teachers.get(t.getName());
+            }
+            case "Course" -> {
+                Course c = (Course) _element;
+                yield (T) m_courses.get(c.getName());
+            }
+            default -> null;
+        };
+    }
+
+    /* ----- SETTERS ----- */
+    public boolean addStudent(Student student) {
+        boolean inUniversity = !m_students.containsKey(student.getName());
+        if (inUniversity) m_students.put(student.getName(), student);
+        return inUniversity;
+    }
+
+    public boolean addTeacher(Teacher teacher) {
+        boolean inUniversity = !m_teachers.containsKey(teacher.getName());
+        if (inUniversity) m_teachers.put(teacher.getName(), teacher);
+        return inUniversity;
+    }
+
+    public boolean addCourse(Course course) {
+        boolean inUniversity = !m_courses.containsKey(course.getName());
+        if (inUniversity) m_courses.put(course.getName(), course);
+        return inUniversity;
     }
 
     /* ----- Public : METHODS ----- */
-
     public void updateData(String[] _data)
     {
 
@@ -109,38 +151,21 @@ public class University {
         actualTeacher.addCourse(classroom);
     }
 
-    public boolean importDataFromCSV(String _fileName)
+    /* ----- Private : METHODS ----- */
+
+    private boolean checkStudentInUniversity(final String _studentName) { return m_students.containsKey(_studentName); }
+
+    private boolean checkSubjectInCourses(final String _subject)
     {
-        boolean success = false;
-
-        try(BufferedReader reader = new BufferedReader(new FileReader(_fileName));) {
-            while (reader.ready())
-                updateData(reader.readLine().split(","));
-            success = true;
-        }catch (IOException exception) {
-            System.out.printf("\n\t\t--- Error ---\n%s", exception.getMessage());
-        }
-
-        return success;
+        return m_courses.containsKey(_subject);
     }
 
-    public boolean extractStudentsWithCourses(String _fileName)
+    private boolean checkTeacherInUniversity(final String _teacherName)
     {
-        boolean success = false;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(_fileName)))
-        {
-            List<String> sorted = m_students.keySet().stream().sorted().toList();
-            writer.write("Student_Name,Course_Count\n");
-            for (String e : sorted)
-                writer.write(String.format("%s,%s\n", e, m_students.get(e).getCountCourses()));
-            success = true;
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return success;
+        return m_teachers.containsKey(_teacherName);
     }
 
+    /* ----- PRINT METHODS ----- */
     public void printCourses()
     {
         if (m_courses.isEmpty())

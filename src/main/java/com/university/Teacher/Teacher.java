@@ -26,6 +26,11 @@ public class Teacher {
     public void addSubject(final String _subject) { if (!m_subjects.contains(_subject)) m_subjects.add(_subject); }
     public void addStudent(final String _student) { if (!m_students.contains(_student)) m_students.add(_student); }
 
+    public void removeCourse(final String _course) { m_courses.remove(_course); }
+    public void removeSubject(final String _subject) { m_subjects.remove(_subject); }
+    public void removeStudent(final String _student) { m_students.remove(_student); }
+
+    /* ----- PRINT METHODS ----- */
     @Override
     public String toString() {
         return String.format(

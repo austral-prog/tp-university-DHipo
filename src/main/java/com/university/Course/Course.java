@@ -11,18 +11,19 @@ public class Course {
     private List<String> m_teachersName = new ArrayList<>();
     private List<Student> m_students = new ArrayList<>();
 
+    /* ----- CONSTRUCTOR ----- */
     public Course(String _name) {
         this.m_name = _name;
     }
 
-    /*------- GETTERS -------*/
+    /* ----- GETTERS ----- */
 
     public String getName() {return m_name;}
     public List<String> getClassrooms() {return m_classrooms;}
     public List<String> getTeachersName() {return m_teachersName;}
     public List<Student> getStudents() {return m_students;}
 
-    /*------- SETTERS -------*/
+    /* ----- SETTERS ----- */
 
     public int addTeacherName(String _TeacherName) {
         if (this.m_teachersName.contains(_TeacherName)) return -1;
@@ -43,6 +44,7 @@ public class Course {
         return 1;
     }
 
+    /* ----- PRINT METHODS ----- */
     @Override
     public String toString() {
         return String.format(

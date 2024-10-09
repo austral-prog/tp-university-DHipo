@@ -7,8 +7,6 @@ import java.util.*;
 
 public class CSVManager {
 
-    public CSVManager() {};
-
     /**
      * Return a map with the name of the columns as keys
      * and the rest of the column in the value of each
