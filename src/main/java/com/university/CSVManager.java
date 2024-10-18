@@ -19,20 +19,12 @@ public class CSVManager {
             List<String[]> formatedLines = buffer.stream().map(e -> e.split(",")).toList();
             String[] keys = formatedLines.getFirst();
 
-            Map<String, List<String>> data = new HashMap<>();
+            Map<String, List<String>> data = new LinkedHashMap<>();
 
-            for (int i = 1; i < formatedLines.size(); i++)
+            for (int i = 1; i < 5; i++)
                 for (int x = 0; x < keys.length; x++){
-
-                    if (!data.containsKey(keys[x])){
-                        ArrayList<String> list = new ArrayList<>();
-                        list.add(formatedLines.get(i)[x]);
-                        data.put(keys[x], list);
-                    }
-
-                    if (data.get(keys[x]).contains(formatedLines.get(i)[x])) continue;
-
-                    data.get(keys[x]).add( formatedLines.get(i)[x]);
+                    data.computeIfAbsent(keys[x], k -> new ArrayList<>());
+                    data.get(keys[x]).add(formatedLines.get(i)[x]);
                 }
 
             return data;

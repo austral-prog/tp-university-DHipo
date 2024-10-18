@@ -5,22 +5,28 @@ import com.university.Universidad.University;
 import java.io.PrintStream;
 
 import static com.university.Solution.exerciseOne;
+import static com.university.Solution.exerciseTwo;
 
 public class App {
 
     static
     {
-        setLog(false);
+        setLog(true);
     }
 
     public static void main(String[] args)
     {
         University university = new University();
 
-        if (exerciseOne(university))
-            System.out.println("The exercise one was done correctly!");
+//        if (exerciseOne(university))
+//            System.out.println("The exercise one was done correctly!");
+//        else
+//            System.out.println("The exercise one was not done correctly!");
+
+        if (exerciseTwo(university))
+            System.out.println("The exercise two was done correctly!");
         else
-            System.out.println("The exercise one was not done correctly!");
+            System.out.println("The exercise two was not done correctly!");
 
     }
 
