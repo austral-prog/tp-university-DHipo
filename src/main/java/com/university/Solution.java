@@ -98,6 +98,8 @@ public class Solution {
         if (data == null || data.isEmpty()) return false;
 
         String[] keys = data.keySet().toArray(new String[0]);
+        Map<String, Student> students = _university.getStudents();
+        /// PARSE THE ALL EXAMS TO A EVALUATION OBJ
         // data.get(keys[0]).size() -> cantidad de lineas del archivo
         for (int i = 0; i < data.get(keys[0]).size(); i++) {
             Evaluation evaluation = new Evaluation();
@@ -105,8 +107,22 @@ public class Solution {
             for (String key : keys)
                 addDataToEvaluation(key, data.get(key).get(i), evaluation);
 
-            System.out.println(evaluation);
+            // Para utilizar esta logica deberia existir el estudiante
+            // en la universidad, una vez leido el input_1
+
+            if (students.containsKey(evaluation.getStudent())) {
+                if (students.get(evaluation.getName()) == null ) continue;
+                students.get(evaluation.getName()).addEvaluation(evaluation);
+                continue;
+            }
+
+            // De no tener el estudiante en la universidad
+            // Creo un estudiante y luego lo agreo a la universidad
+            Student student = new Student(evaluation.getStudent());
+            student.addEvaluation(evaluation);
+            students.put(student.getName(), student);
         }
+        students.get("Dana Green").showEvaluations();
         return true;
     }
 
