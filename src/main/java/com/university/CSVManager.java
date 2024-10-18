@@ -21,7 +21,7 @@ public class CSVManager {
 
             Map<String, List<String>> data = new LinkedHashMap<>();
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < formatedLines.size(); i++)
                 for (int x = 0; x < keys.length; x++){
                     data.computeIfAbsent(keys[x], k -> new ArrayList<>());
                     data.get(keys[x]).add(formatedLines.get(i)[x]);

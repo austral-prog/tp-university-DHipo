@@ -6,10 +6,10 @@ import com.university.Universidad.University;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Float.parseFloat;
 
 public class Solution {
 
@@ -78,20 +78,34 @@ public class Solution {
     }
 
     /* --- private : Methods - Exercise Two --- */
+    private static void addDataToEvaluation(final String _key, final String _value, Evaluation evaluation) {
+
+        // Estos son los nombres de las keys
+        // Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade
+        switch (_key) {
+            case "Student": evaluation.setStudent(_value); break;
+            case "Subject": evaluation.setSubject(_value); break;
+            case "Evaluation_Type": evaluation.setType(_value); break;
+            case "Evaluation_Name": evaluation.setName(_value); break;
+            case "Exercise_Name": evaluation.addExercise(_value); break;
+            case "Grade": evaluation.addGrade(parseFloat(_value)); break;
+        }
+    }
+
+    /* --- public : Methods - Exercise Two --- */
     public static boolean exerciseTwo(University _university) {
         Map<String, List<String>> data = CSVManager.getDataFromFileAsMap(inputFile_2);
-        System.out.println(data);
         if (data == null || data.isEmpty()) return false;
 
         String[] keys = data.keySet().toArray(new String[0]);
-
         // data.get(keys[0]).size() -> cantidad de lineas del archivo
         for (int i = 0; i < data.get(keys[0]).size(); i++) {
+            Evaluation evaluation = new Evaluation();
             // keys.length -> cantidad de columnas
-            for (int j = 0; j < keys.length; j++) {
-                System.out.println(data.get(keys[j]).get(i));
-            }
-            System.out.println();
+            for (String key : keys)
+                addDataToEvaluation(key, data.get(key).get(i), evaluation);
+
+            System.out.println(evaluation);
         }
         return true;
     }
