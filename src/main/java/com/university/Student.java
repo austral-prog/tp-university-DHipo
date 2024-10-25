@@ -1,6 +1,4 @@
-package com.university.Student;
-
-import com.university.Evaluation;
+package com.university;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +9,7 @@ public class Student {
     private String m_name;
     private String m_email;
     private List<String> m_Courses;
-    private Map<String, List<Evaluation>> m_evaluations;
+    private Map<String, Map<String, Evaluation>> m_evaluations;
 
     /* ----- CONSTRUCTOR ----- */
     public Student(String _name) {
@@ -31,7 +29,7 @@ public class Student {
     /* ----- GETTERS ----- */
     public String getName() {return this.m_name;}
     public String getEmail() {return this.m_email;}
-    public Map<String, List<Evaluation>> getGrades() {return this.m_evaluations;}
+    public Map<String, Map<String, Evaluation>> getGrades() {return this.m_evaluations;}
     public List<String> getCourses() {return this.m_Courses;}
     public int getCountCourses() {return this.m_Courses.size();}
 
@@ -51,10 +49,17 @@ public class Student {
     public int addEvaluation(final Evaluation _evaluation) {
         // De no existir una key para esa materia la creo
         if (this.m_evaluations.get(_evaluation.getSubject()) == null)
-            m_evaluations.put(_evaluation.getSubject(), new ArrayList<>());
-        if (this.m_evaluations.get(_evaluation.getSubject()).contains(_evaluation)) return -1;
+            m_evaluations.put(_evaluation.getSubject(), new HashMap<>());
 
-        this.m_evaluations.get(_evaluation.getSubject()).add(_evaluation);
+        Map<String, Evaluation> evalsOfSubject = this.m_evaluations.get(_evaluation.getSubject());
+        Evaluation evaluation = evalsOfSubject.get(_evaluation.getName());
+
+        if (evaluation == null) {
+            evalsOfSubject.put(_evaluation.getName(), _evaluation);
+            return 1;
+        }
+
+        _evaluation.getResults().forEach((e, g) -> evaluation.getResults().put(e, g));
         return 1;
     }
 
@@ -70,7 +75,7 @@ public class Student {
     public void showEvaluations() {
         m_evaluations.forEach((k, v) -> {
             System.out.printf("Subject - %s\n", k.toUpperCase());
-            for (Evaluation e : v) System.out.println(e);
+            for (Map.Entry<String, Evaluation> e : v.entrySet()) System.out.println(e);
         });
     }
 }

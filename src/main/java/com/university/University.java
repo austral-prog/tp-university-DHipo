@@ -1,22 +1,7 @@
-package com.university.Universidad;
+package com.university;
 
-import com.university.Course.*;
-import com.university.Student.Student;
-import com.university.Teacher.Teacher;
-
-import java.io.*;
 import java.util.*;
-import java.util.List;
-
-// Classroom, Subject, Student_Name, Student_Email, Subject_Teacher
-enum IndexData
-{
-    CLASSROOM,
-    SUBJECT,
-    STUDENT_NAME,
-    STUDENT_EMAIL,
-    SUBJECT_TEACHER
-}
+import com.university.Solution.IndexData;
 
 public class University {
     private final String m_universityName = "Austral University";

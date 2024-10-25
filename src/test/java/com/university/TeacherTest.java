@@ -1,6 +1,5 @@
 package com.university;
 
-import com.university.Teacher.Teacher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

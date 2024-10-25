@@ -1,15 +1,15 @@
 package com.university;
 
-import com.university.Student.Student;
-import com.university.Universidad.University;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.lang.Float.parseFloat;
+import static javax.swing.UIManager.put;
 
 public class Solution {
 
@@ -19,9 +19,30 @@ public class Solution {
     private static final String solutionFile = resourcesPath.concat("solution.csv");
     private static final String inputFile = resourcesPath.concat("input.csv");
 
+    // Classroom, Subject, Student_Name, Student_Email, Subject_Teacher
+    public enum IndexData
+    {
+        CLASSROOM,
+        SUBJECT,
+        STUDENT_NAME,
+        STUDENT_EMAIL,
+        SUBJECT_TEACHER
+    }
+
+
     /* --- exercise two : Variables --- */
     private static final String solutionFile_2 = resourcesPath.concat("solution_2.csv");
     private static final String inputFile_2 = resourcesPath.concat("input_2.csv");
+
+    // Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade
+    private enum IndexData_2 {
+        STUDENT_NAME,
+        SUBJECT_NAME,
+        EVALUATION_TYPE,
+        EVALUATION_NAME,
+        EXERCISE_NAME,
+        GRADE
+    };
 
     /* --- private : Methods - Exercise One --- */
     private static boolean extractStudentsWithCourses(University _university)
@@ -78,7 +99,10 @@ public class Solution {
     }
 
     /* --- private : Methods - Exercise Two --- */
-    private static void addDataToEvaluation(final String _key, final String _value, Evaluation evaluation) {
+    private static void checkEvalInStudent() {}
+
+    private static void addDataToEvaluation(final String _key, final String _value, Evaluation evaluation)
+    {
 
         // Estos son los nombres de las keys
         // Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade
@@ -92,37 +116,44 @@ public class Solution {
         }
     }
 
+    private static void addEvaluationToStudent(Student _student, String[] _line)
+    {
+        Evaluation eval = new Evaluation();
+
+        eval.setName(_line[IndexData_2.EVALUATION_NAME.ordinal()]);
+        eval.setType(_line[IndexData_2.EVALUATION_TYPE.ordinal()]);
+        eval.setSubject(_line[IndexData_2.EVALUATION_NAME.ordinal()]);
+        eval.setStudent(_line[IndexData_2.STUDENT_NAME.ordinal()]);
+
+        Map<String, Float> results = new HashMap<>();
+        results.put(_line[IndexData_2.EXERCISE_NAME.ordinal()], parseFloat(_line[IndexData_2.GRADE.ordinal()]));
+        eval.setResults(results);
+
+        _student.addEvaluation(eval);
+    }
+
     /* --- public : Methods - Exercise Two --- */
     public static boolean exerciseTwo(University _university) {
-        Map<String, List<String>> data = CSVManager.getDataFromFileAsMap(inputFile_2);
-        if (data == null || data.isEmpty()) return false;
+        List<String> rawData = CSVManager.getDataFromFileAsList(inputFile_2);
+        if (rawData == null || rawData.isEmpty()) return false;
 
-        String[] keys = data.keySet().toArray(new String[0]);
         Map<String, Student> students = _university.getStudents();
-        /// PARSE THE ALL EXAMS TO A EVALUATION OBJ
-        // data.get(keys[0]).size() -> cantidad de lineas del archivo
-        for (int i = 0; i < data.get(keys[0]).size(); i++) {
-            Evaluation evaluation = new Evaluation();
-            // keys.length -> cantidad de columnas
-            for (String key : keys)
-                addDataToEvaluation(key, data.get(key).get(i), evaluation);
 
-            // Para utilizar esta logica deberia existir el estudiante
-            // en la universidad, una vez leido el input_1
+        for (int i = 1; i < rawData.size(); i++) {
+            String[] line = rawData.get(i).split(",");
 
-            if (students.containsKey(evaluation.getStudent())) {
-                if (students.get(evaluation.getName()) == null ) continue;
-                students.get(evaluation.getName()).addEvaluation(evaluation);
+            Student student = students.get(line[IndexData_2.STUDENT_NAME.ordinal()]);
+            if (student == null) {
+                /// Genero el estudiante, agrego la evaluacion y lo agrego a la universidad
+                student = new Student(line[IndexData_2.STUDENT_NAME.ordinal()]);
+                addEvaluationToStudent(student, line);
+                students.put(student.getName(), student);
                 continue;
             }
 
-            // De no tener el estudiante en la universidad
-            // Creo un estudiante y luego lo agreo a la universidad
-            Student student = new Student(evaluation.getStudent());
-            student.addEvaluation(evaluation);
-            students.put(student.getName(), student);
+            addEvaluationToStudent(student, line);
         }
-        students.get("Dana Green").showEvaluations();
+        students.get("Eve Black").showEvaluations();
         return true;
     }
 

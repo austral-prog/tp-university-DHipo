@@ -1,10 +1,7 @@
 package com.university;
 
-import com.university.Universidad.University;
-
 import java.io.PrintStream;
 
-import static com.university.Solution.exerciseOne;
 import static com.university.Solution.exerciseTwo;
 
 public class App {
