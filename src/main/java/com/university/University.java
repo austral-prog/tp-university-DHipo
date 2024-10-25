@@ -8,6 +8,7 @@ public class University {
     private Map<String, Course> m_courses = new HashMap<String, Course>();
     private Map<String, Student> m_students = new HashMap<String, Student>();
     private Map<String, Teacher> m_teachers = new HashMap<>();
+    private Map<String, List<Evaluation>> m_evaluations = new HashMap<>();
 
     /* ----- CONSTRUCTOR ----- */
     public University()
@@ -19,6 +20,7 @@ public class University {
     public Map<String, Course> getCourses() { return m_courses; }
     public Map<String, Student> getStudents() { return m_students; }
     public Map<String, Teacher> getTeachers() { return m_teachers; }
+    public Map<String, List<Evaluation>> getEvaluations() { return m_evaluations; }
     public String getUniversityName() { return m_universityName; }
 
     public <T> boolean inUniversity (final T _element) {
@@ -35,6 +37,10 @@ public class University {
             case "Course" -> {
                 Course c = (Course) _element;
                 yield m_courses.containsKey(c.getName());
+            }
+            case "Evaluation" -> {
+                Evaluation e = (Evaluation) _element;
+                yield m_evaluations.containsKey(e.getName());
             }
             default -> false;
         };
@@ -54,6 +60,10 @@ public class University {
             case "Course" -> {
                 Course c = (Course) _element;
                 yield (T) m_courses.get(c.getName());
+            }
+            case "Evaluation" -> {
+                Evaluation e = (Evaluation) _element;
+                yield (T) m_evaluations.get(e.getName());
             }
             default -> null;
         };
@@ -76,6 +86,14 @@ public class University {
         boolean inUniversity = !m_courses.containsKey(course.getName());
         if (inUniversity) m_courses.put(course.getName(), course);
         return inUniversity;
+    }
+
+    public boolean addEvaluation(Evaluation evaluation) {
+        if (!m_evaluations.containsKey(evaluation.getSubject())){
+            m_evaluations.put(evaluation.getSubject(), new ArrayList<>());
+        }
+        m_evaluations.get(evaluation.getSubject()).add(evaluation);
+        return true;
     }
 
     /* ----- Public : METHODS ----- */

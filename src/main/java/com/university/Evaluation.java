@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Evaluation {
+public class Evaluation{
     private String type = "";
     private String name = "";
     private String subject = "";
@@ -30,6 +30,13 @@ public class Evaluation {
     public String getSubject() { return subject; }
     public String getStudent() { return student; }
     public Map<String, Float> getResults() { return results; }
+    public float getAverage()
+    {
+        float total = 0;
+        for (float value : results.values())
+            total += value;
+        return total/results.size();
+    }
 
     /* ----- SETTERS ----- */
     public void setType(String _type) { type = _type; }

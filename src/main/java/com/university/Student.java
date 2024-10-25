@@ -32,6 +32,16 @@ public class Student {
     public Map<String, Map<String, Evaluation>> getGrades() {return this.m_evaluations;}
     public List<String> getCourses() {return this.m_Courses;}
     public int getCountCourses() {return this.m_Courses.size();}
+    public Map<String, Map<String, Float>> getAllPromedio() {
+        Map<String, Map<String, Float>> result = new HashMap<>();
+        for (String key : this.m_evaluations.keySet().stream().toList()) {
+            Map<String, Float> promedio = new HashMap<>();
+            for (String name : m_evaluations.get(key).keySet().stream().toList())
+                promedio.put(name, this.m_evaluations.get(key).get(name).getAverage());
+            result.put(key, promedio);
+        }
+        return result;
+    }
 
     /* ----- SETTERS ----- */
     public int addCourse(final String _course) {
