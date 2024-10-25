@@ -89,11 +89,23 @@ public class University {
     }
 
     public boolean addEvaluation(Evaluation evaluation) {
-        if (!m_evaluations.containsKey(evaluation.getSubject())){
-            m_evaluations.put(evaluation.getSubject(), new ArrayList<>());
+        if (!m_evaluations.containsKey(evaluation.getSubject())) {
+            m_evaluations.put(evaluation.getSubject(), new ArrayList<>() {{
+                add(evaluation);
+            }});
+            return true;
+        }
+        // de estar le evaluacion
+        for (Evaluation eval : m_evaluations.get(evaluation.getSubject())) {
+            if (!eval.getName().equals(evaluation.getName())
+                    || !eval.getStudent().equals(evaluation.getStudent()))
+                continue;
+
+            eval.getResults().putAll(evaluation.getResults());
+            return true;
         }
         m_evaluations.get(evaluation.getSubject()).add(evaluation);
-        return true;
+        return false;
     }
 
     /* ----- Public : METHODS ----- */

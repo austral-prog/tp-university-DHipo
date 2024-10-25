@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Evaluation{
+public class Evaluation implements Comparable {
     private String type = "";
     private String name = "";
     private String subject = "";
@@ -49,7 +49,6 @@ public class Evaluation{
     public void addExercise(final String _exercise) {
         exerciseToAdd = _exercise;
     }
-
     public void addGrade(final float _grade)
     {
         if (results.containsKey(exerciseToAdd)) return;
@@ -63,5 +62,16 @@ public class Evaluation{
                 "Type: %s, Name: %s, Subject: %s, Author: %s, Grade: %s",
                 type, name, subject, student, results
         );
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (!(o instanceof Evaluation)) return -1;
+
+        Evaluation e = (Evaluation) o;
+
+        int compare = name.compareTo(e.name);
+        if (compare == 0) return student.compareTo(e.student);
+        return compare;
     }
 }

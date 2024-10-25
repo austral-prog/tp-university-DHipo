@@ -7,7 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Float.parseFloat;
-import static javax.swing.UIManager.put;
 
 public class Solution {
 
@@ -105,20 +104,23 @@ public class Solution {
             BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFile_2));
             Map<String, List<Evaluation>> evaluations = _university.getEvaluations();
 
-            List<String> keySorted = evaluations.keySet().stream().sorted().toList();
+            List<String> subjectsSorted = evaluations.keySet().stream().sorted().toList();
 
-//            writer.write("Student_Name,Course_Count\n");
+            writer.write("Subject_Name,Evaluation_Name,Student_Name,Grade\n");
 
-            for (String key : keySorted){
-                Set<String> evalName = evaluations.get(key).stream().map(Evaluation::getName).collect(Collectors.toSet());
-                List<String> evalNameSorted = evalName.stream().sorted().toList();
-                for (String name : evalNameSorted){
-                    Evaluation acutalEval = evaluations.get(key).get(evalNameSorted.indexOf(name));
-//                    System.out.printf("%s,%s,%s,%s\n", key, name, acutalEval.getStudent(), acutalEval.getAverage());
-                }
+            for (String subject : subjectsSorted){
+                System.out.printf("%s = \n", subject);
+                List<Evaluation> evaluationSorted = evaluations.get(subject)
+                        .stream().sorted().toList();
+
+                for (Evaluation e : evaluationSorted)
+                    writer.write(
+                            String.format("%s,%s,%s,%s\n",subject, e.getName(), e.getStudent(), e.getAverage())
+                    );
+
             }
 
-//            writer.close();
+            writer.close();
             success = true;
 
         }catch (IOException e) {
