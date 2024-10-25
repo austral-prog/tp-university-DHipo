@@ -3,7 +3,7 @@ package com.university.person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teacher {
+public class Teacher extends Person {
     private List<String> m_courses = new ArrayList<String>();
     private List<String> m_subjects = new ArrayList<String>();
     private List<String> m_students = new ArrayList<String>();
@@ -44,5 +44,11 @@ public class Teacher {
                 """,
                 m_name, m_subjects.stream().sorted().toList(), m_courses.stream().sorted().toList(), m_students.stream().sorted().toList()
         );
+    }
+
+    @Override
+    public List<String> toCSV() {
+        List<String> result = new ArrayList<>();
+        return result;
     }
 }

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Student {
+public class Student extends Person{
     private String m_name;
     private String m_email;
     private List<String> m_Courses;
@@ -46,10 +46,9 @@ public class Student {
     }
 
     /* ----- SETTERS ----- */
-    public int addCourse(final String _course) {
-        if (this.m_Courses.contains(_course)) return -1;
+    public void addCourse(final String _course) {
+        if (this.m_Courses.contains(_course)) return;
         this.m_Courses.add(_course);
-        return 1;
     }
 
     public int removeCourse(final String _course) {
@@ -58,7 +57,7 @@ public class Student {
         return 1;
     }
 
-    public int addEvaluation(final Evaluation _evaluation) {
+    public void addEvaluation(final Evaluation _evaluation) {
         // De no existir una key para esa materia la creo
         if (this.m_evaluations.get(_evaluation.getSubject()) == null)
             m_evaluations.put(_evaluation.getSubject(), new HashMap<>());
@@ -68,11 +67,10 @@ public class Student {
 
         if (evaluation == null) {
             evalsOfSubject.put(_evaluation.getName(), _evaluation);
-            return 1;
+            return;
         }
 
         _evaluation.getResults().forEach((e, g) -> evaluation.getResults().put(e, g));
-        return 1;
     }
 
     /* --- PRINT METHODS --- */
@@ -89,5 +87,11 @@ public class Student {
             System.out.printf("Subject - %s\n", k.toUpperCase());
             for (Map.Entry<String, Evaluation> e : v.entrySet()) System.out.println(e);
         });
+    }
+
+    @Override
+    public List<String> toCSV() {
+        List<String> result = new ArrayList<>();
+        return result;
     }
 }
