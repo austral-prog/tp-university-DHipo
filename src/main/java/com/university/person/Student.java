@@ -1,4 +1,6 @@
-package com.university;
+package com.university.person;
+
+import com.university.Evaluation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

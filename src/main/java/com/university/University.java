@@ -1,14 +1,15 @@
 package com.university;
 
 import java.util.*;
-import com.university.Solution.IndexData;
+import com.university.person.Student;
+import com.university.person.Teacher;
 
 public class University {
     private final String m_universityName = "Austral University";
-    private Map<String, Course> m_courses = new HashMap<String, Course>();
-    private Map<String, Student> m_students = new HashMap<String, Student>();
-    private Map<String, Teacher> m_teachers = new HashMap<>();
-    private Map<String, List<Evaluation>> m_evaluations = new HashMap<>();
+    private final Map<String, Course> m_courses = new HashMap<String, Course>();
+    private final Map<String, Student> m_students = new HashMap<String, Student>();
+    private final Map<String, Teacher> m_teachers = new HashMap<>();
+    private final Map<String, List<Evaluation>> m_evaluations = new HashMap<>();
 
     /* ----- CONSTRUCTOR ----- */
     public University()
@@ -22,6 +23,17 @@ public class University {
     public Map<String, Teacher> getTeachers() { return m_teachers; }
     public Map<String, List<Evaluation>> getEvaluations() { return m_evaluations; }
     public String getUniversityName() { return m_universityName; }
+
+    public boolean checkStudentInUniversity(final String _studentName) { return m_students.containsKey(_studentName); }
+    public boolean checkSubjectInCourses(final String _subject)
+    {
+        return m_courses.containsKey(_subject);
+    }
+    public boolean checkTeacherInUniversity(final String _teacherName)
+    {
+        return m_teachers.containsKey(_teacherName);
+    }
+
 
     public <T> boolean inUniversity (final T _element) {
         String className = _element.getClass().getSimpleName();
@@ -46,29 +58,6 @@ public class University {
         };
     }
 
-    public <T> T getInUniversity (final T _element) {
-        String className = _element.getClass().getSimpleName();
-        return switch (className) {
-            case "Student" -> {
-                Student s = (Student) _element;
-                yield (T) m_students.get(s.getName());
-            }
-            case "Teacher" -> {
-                Teacher t = (Teacher) _element;
-                yield (T) m_teachers.get(t.getName());
-            }
-            case "Course" -> {
-                Course c = (Course) _element;
-                yield (T) m_courses.get(c.getName());
-            }
-            case "Evaluation" -> {
-                Evaluation e = (Evaluation) _element;
-                yield (T) m_evaluations.get(e.getName());
-            }
-            default -> null;
-        };
-    }
-
     /* ----- SETTERS ----- */
     public boolean addStudent(Student student) {
         boolean inUniversity = !m_students.containsKey(student.getName());
@@ -88,12 +77,11 @@ public class University {
         return inUniversity;
     }
 
-    public boolean addEvaluation(Evaluation evaluation) {
+    public void addEvaluation(Evaluation evaluation) {
         if (!m_evaluations.containsKey(evaluation.getSubject())) {
             m_evaluations.put(evaluation.getSubject(), new ArrayList<>() {{
                 add(evaluation);
             }});
-            return true;
         }
         // de estar le evaluacion
         for (Evaluation eval : m_evaluations.get(evaluation.getSubject())) {
@@ -102,82 +90,8 @@ public class University {
                 continue;
 
             eval.getResults().putAll(evaluation.getResults());
-            return true;
         }
         m_evaluations.get(evaluation.getSubject()).add(evaluation);
-        return false;
-    }
-
-    /* ----- Public : METHODS ----- */
-    public void updateData(String[] _data)
-    {
-
-        if (_data[IndexData.CLASSROOM.ordinal()].equals("Classroom")) return;
-        if (_data[IndexData.SUBJECT.ordinal()].equals("Subject")) return;
-
-        final String subject        = _data[IndexData.SUBJECT.ordinal()];
-        final String classroom      = _data[IndexData.CLASSROOM.ordinal()];
-        final String studentName    = _data[IndexData.STUDENT_NAME.ordinal()];
-        final String studentEmail   = _data[IndexData.STUDENT_EMAIL.ordinal()];
-        final String teacher        = _data[IndexData.SUBJECT_TEACHER.ordinal()];
-
-        if (!checkStudentInUniversity(studentName))
-        {
-            Student newStudent = new Student(studentName, studentEmail);
-            newStudent.addCourse(subject);
-            m_students.put(studentName, newStudent);
-        }
-
-        if (!checkTeacherInUniversity(teacher))
-        {
-            Teacher newTeacher = new Teacher(teacher);
-            newTeacher.addCourse(classroom);
-            newTeacher.addSubject(subject);
-            newTeacher.addStudent(studentName);
-            m_teachers.put(teacher, newTeacher);
-        }
-
-        if(!checkSubjectInCourses(subject))
-        {
-            Course newCourse = new Course(subject);
-            newCourse.addStudent(m_students.get(studentName));
-            newCourse.addClassroom(classroom);
-            newCourse.addTeacherName(teacher);
-            m_courses.put(newCourse.getName(), newCourse);
-            return;
-        }
-
-        /* ----- UPDATE DATA ----- */
-        Course actualCourse = m_courses.get(subject);
-        Student actualStudent = m_students.get(studentName);
-        Teacher actualTeacher = m_teachers.get(teacher);
-
-        /* --- Course --- */
-        actualCourse.addClassroom(classroom);
-        actualCourse.addTeacherName(teacher);
-        actualCourse.addStudent(actualStudent);
-
-        /* --- Student --- */
-        actualStudent.addCourse(subject);
-
-        /* --- Teacher --- */
-        actualTeacher.addSubject(subject);
-        actualTeacher.addStudent(studentName);
-        actualTeacher.addCourse(classroom);
-    }
-
-    /* ----- Private : METHODS ----- */
-
-    private boolean checkStudentInUniversity(final String _studentName) { return m_students.containsKey(_studentName); }
-
-    private boolean checkSubjectInCourses(final String _subject)
-    {
-        return m_courses.containsKey(_subject);
-    }
-
-    private boolean checkTeacherInUniversity(final String _teacherName)
-    {
-        return m_teachers.containsKey(_teacherName);
     }
 
     /* ----- PRINT METHODS ----- */

@@ -2,7 +2,7 @@ package com.university;
 
 import java.io.PrintStream;
 
-import static com.university.Solution.exerciseTwo;
+import com.university.solution.ExerciseTwo;
 
 public class App {
 
@@ -20,11 +20,7 @@ public class App {
 //        else
 //            System.out.println("The exercise one was not done correctly!");
 
-        if (exerciseTwo(university))
-            System.out.println("The exercise two was done correctly!");
-        else
-            System.out.println("The exercise two was not done correctly!");
-
+        ExerciseTwo.solution(university);
     }
 
     private static void setLog(final boolean _enable)

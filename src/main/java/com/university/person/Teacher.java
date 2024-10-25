@@ -1,4 +1,4 @@
-package com.university;
+package com.university.person;
 
 import java.util.ArrayList;
 import java.util.List;

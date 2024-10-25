@@ -1,5 +1,6 @@
 package com.university;
 
+import com.university.person.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,15 +28,5 @@ public class UniversityTest {
         assertTrue(university.addCourse(course), "Course should be added successfully.");
         assertFalse(university.addCourse(course), "Duplicate course should not be added.");
         assertTrue(university.getCourses().containsKey("Mathematics"), "University should contain Mathematics course.");
-    }
-
-    @Test
-    public void testUpdateDataNewStudent() {
-        String[] data = {"Classroom A", "Mathematics", "Alice", "alice@example.com", "Prof. Smith"};
-        assertDoesNotThrow(() -> university.updateData(data), "Update data should not throw an exception.");
-
-        assertTrue(university.getStudents().containsKey("Alice"), "Alice should be added to the university.");
-        assertTrue(university.getTeachers().containsKey("Prof. Smith"), "Prof. Smith should be added to the university.");
-        assertTrue(university.getCourses().containsKey("Mathematics"), "Mathematics course should be added to the university.");
     }
 }

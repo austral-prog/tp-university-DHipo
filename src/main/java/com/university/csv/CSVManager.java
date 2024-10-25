@@ -1,11 +1,11 @@
-package com.university;
+package com.university.csv;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class CSVManager {
+public class CSVManager implements CSVWriter {
 
     /**
      * Return a map with the name of the columns as keys
@@ -43,4 +43,13 @@ public class CSVManager {
             return null;
         }
     }
+
+    @Override
+    public void writeCSV(CSVWritable writable)
+    {
+
+    }
+
+    @Override
+    public void writeCSV(List<CSVWritable> writableList){}
 }
