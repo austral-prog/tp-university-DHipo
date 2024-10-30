@@ -90,6 +90,7 @@ public class University {
                 continue;
 
             eval.getResults().putAll(evaluation.getResults());
+            return;
         }
         m_evaluations.get(evaluation.getSubject()).add(evaluation);
     }

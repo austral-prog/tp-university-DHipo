@@ -125,7 +125,8 @@ public class ExerciseOne implements Solution {
     }
 
     /** Main solution */
-    public static void solution (University university) {
+    @Override
+    public void solution (University university) {
         boolean result = uploadDataToUniversity(university, CSVManager.getDataFromFileAsList(inputFile));
 
         if (!result) return;
@@ -136,5 +137,10 @@ public class ExerciseOne implements Solution {
         if (!extractStudentsWithCourses(university)) return;
 
         System.out.println("Writing file was done correctly!");
+    }
+
+    @Override
+    public void exportAsCSV(University university) {
+
     }
 }

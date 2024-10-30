@@ -1,8 +1,12 @@
 package com.university;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseTwo;
+import com.university.solution.Solution;
 
 public class App {
 
@@ -15,12 +19,14 @@ public class App {
     {
         University university = new University();
 
-//        if (exerciseOne(university))
-//            System.out.println("The exercise one was done correctly!");
-//        else
-//            System.out.println("The exercise one was not done correctly!");
+        List<Solution> solutions = new ArrayList<>()
+        {{
+            add(new ExerciseOne());
+            add(new ExerciseTwo());
+        }};
 
-        ExerciseTwo.solution(university);
+        solutions.get(1).solution(university);
+
     }
 
     private static void setLog(final boolean _enable)

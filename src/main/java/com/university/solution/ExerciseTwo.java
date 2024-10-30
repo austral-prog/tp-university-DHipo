@@ -40,7 +40,6 @@ public class ExerciseTwo implements Solution {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFile_2));
             Map<String, List<Evaluation>> evaluations = _university.getEvaluations();
-
             List<String> subjectsSorted = evaluations.keySet().stream().sorted().toList();
 
             writer.write("Subject_Name,Evaluation_Name,Student_Name,Grade\n");
@@ -81,7 +80,8 @@ public class ExerciseTwo implements Solution {
     }
 
     /* --- public : Methods - Exercise Two --- */
-    public static void solution (University university) {
+    @Override
+    public void solution (University university) {
         List<String> rawData = CSVManager.getDataFromFileAsList(inputFile_2);
         if (rawData == null || rawData.isEmpty()) return;
 
@@ -102,5 +102,10 @@ public class ExerciseTwo implements Solution {
             university.addEvaluation(eval);
         }
         extractSubjectsWithGrades(university);
+    }
+
+    @Override
+    public void exportAsCSV(University university) {
+
     }
 }
