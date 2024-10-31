@@ -119,7 +119,7 @@ public class ExerciseOne implements Solution {
     {
         if (_data == null || _data.isEmpty()) return false;
 
-        for (String line : _data)   updateData(_university, line.split(","));
+        for (String line : _data.subList(1, _data.size()))   updateData(_university, line.split(","));
 
         return true;
     }

@@ -25,7 +25,7 @@ public class App {
             add(new ExerciseTwo());
         }};
 
-        solutions.get(1).solution(university);
+        solutions.get(0).solution(university);
 
     }
 
