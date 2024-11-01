@@ -1,7 +1,6 @@
 package com.university;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,8 @@ public class Evaluation implements Comparable {
     private String subject = "";
     private String student = "";
     // keys of grades represent the exercise
-    private Map<String, Float> results = new HashMap<>();
+    // LinkedHashMap porque mantiene el orden de insercion
+    private Map<String, Float> results = new LinkedHashMap<>();
     private String exerciseToAdd = "";
 
     /* ----- CONSTRUCTOR ----- */
@@ -30,12 +30,54 @@ public class Evaluation implements Comparable {
     public String getSubject() { return subject; }
     public String getStudent() { return student; }
     public Map<String, Float> getResults() { return results; }
+
     public float getAverage()
     {
-        float total = 0;
-        for (float value : results.values())
-            total += value;
-        return total/results.size();
+        // types = [FINAL_PRACTICAL_WORK, PRACTICAL_WORK, WRITTEN_EXAM, ORAL_EXAM]
+        return switch (this.type)
+        {
+            case "FINAL_PRACTICAL_WORK":
+                yield getFinalExamAverage();
+            case "PRACTICAL_WORK":
+                yield getPracticalWorkAverage();
+            case "WRITTEN_EXAM":
+                yield getWrittenExamAverage();
+            case "ORAL_EXAM":
+                yield getOralExamAverage();
+            default:
+                yield 0;
+        };
+    }
+
+    private float getFinalExamAverage()
+    {
+        float result = 0;
+
+        for (float grade : results.values())
+            result += grade;
+
+        return result;
+    }
+
+    private float getWrittenExamAverage()
+    {
+        float result = 0;
+
+        for (float grade : this.results.values())
+            result += grade;
+
+        return result / this.results.size();
+    }
+
+    private float getPracticalWorkAverage() {
+        // puse sorted, porque en algunos alumnos me aparece su mayor nota, no la ultima
+        List<Float> result = this.results.values().stream().sorted().toList();
+        return result.getLast();
+    }
+
+    private float getOralExamAverage()
+    {
+        return this.results.values().stream().toList().getFirst();
     }
 
     /* ----- SETTERS ----- */

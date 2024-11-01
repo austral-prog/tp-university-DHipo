@@ -2,7 +2,9 @@ package com.university;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseTwo;
@@ -25,7 +27,7 @@ public class App {
             add(new ExerciseTwo());
         }};
 
-        solutions.get(0).solution(university);
+        for (Solution exercise : solutions) exercise.solution(university);
 
     }
 

@@ -95,11 +95,13 @@ public class ExerciseTwo implements Solution {
                 /// Genero el estudiante, agrego la evaluacion y lo agrego a la universidad
                 student = new Student(line[STUDENT_NAME.value]);
                 students.put(student.getName(), student);
+                students.get(student.getName()).addEvaluation(addEvaluationToStudent(student, line));
                 continue;
             }
 
-            Evaluation eval = addEvaluationToStudent(student, line);
-            university.addEvaluation(eval);
+            university.addEvaluation(
+                    addEvaluationToStudent(student, line)
+            );
         }
         extractSubjectsWithGrades(university);
     }
