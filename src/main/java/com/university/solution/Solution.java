@@ -1,6 +1,6 @@
 package com.university.solution;
 
-import com.university.University;
+import com.university.model.University;
 
 import java.util.ArrayList;
 import java.util.List;

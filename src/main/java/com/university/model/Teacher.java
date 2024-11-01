@@ -1,9 +1,9 @@
-package com.university.person;
+package com.university.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teacher extends Person {
+public class Teacher implements Entity {
     private List<String> m_courses = new ArrayList<String>();
     private List<String> m_subjects = new ArrayList<String>();
     private List<String> m_students = new ArrayList<String>();
@@ -46,9 +46,18 @@ public class Teacher extends Person {
         );
     }
 
-    @Override
     public List<String> toCSV() {
         List<String> result = new ArrayList<>();
         return result;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
     }
 }

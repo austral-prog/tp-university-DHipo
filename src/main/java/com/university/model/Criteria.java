@@ -1,6 +1,4 @@
-package com.university;
-
-import java.util.List;
+package com.university.model;
 
 public class Criteria {
     public CriteriaType m_criteriaType;

@@ -1,9 +1,9 @@
 package com.university.solution;
 
-import com.university.Evaluation;
-import com.university.University;
+import com.university.model.Evaluation;
+import com.university.model.University;
 import com.university.csv.CSVManager;
-import com.university.person.Student;
+import com.university.model.Student;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

@@ -1,8 +1,8 @@
 package com.university.solution;
 
-import com.university.Course;
-import com.university.Criteria;
-import com.university.University;
+import com.university.model.Course;
+import com.university.model.Criteria;
+import com.university.model.University;
 import com.university.csv.CSVManager;
 
 import java.util.HashSet;

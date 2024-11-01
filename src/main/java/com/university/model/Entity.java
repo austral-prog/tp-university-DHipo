@@ -1,4 +1,4 @@
-package com.university;
+package com.university.model;
 
 public interface Entity {
     int getId();

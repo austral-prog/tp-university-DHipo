@@ -1,8 +1,6 @@
-package com.university;
+package com.university.model;
 
 import java.util.*;
-import com.university.person.Student;
-import com.university.person.Teacher;
 
 public class University {
     private final String m_universityName = "Austral University";

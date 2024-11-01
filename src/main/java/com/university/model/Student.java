@@ -1,13 +1,11 @@
-package com.university.person;
-
-import com.university.Evaluation;
+package com.university.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Student extends Person{
+public class Student implements Entity {
     private String m_name;
     private String m_email;
     private List<String> m_Courses;
@@ -90,9 +88,18 @@ public class Student extends Person{
         });
     }
 
-    @Override
     public List<String> toCSV() {
         List<String> result = new ArrayList<>();
         return result;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
     }
 }

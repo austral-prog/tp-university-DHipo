@@ -1,6 +1,4 @@
-package com.university;
-
-import com.university.person.Student;
+package com.university.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +78,6 @@ public class Course {
     }
 
     public boolean getStateOfSubject(String subject) {
-
+     return false;
     }
 }

@@ -1,15 +1,14 @@
 package com.university.solution;
 
-import com.university.Course;
-import com.university.University;
+import com.university.model.Course;
+import com.university.model.University;
 import com.university.csv.CSVManager;
-import com.university.person.Student;
-import com.university.person.Teacher;
+import com.university.model.Student;
+import com.university.model.Teacher;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

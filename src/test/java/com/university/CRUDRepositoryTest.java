@@ -1,5 +1,7 @@
 package com.university;
 
+import com.university.model.Entity;
+import com.university.repository.CRUDRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.university.model.University;
 import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseThree;
 import com.university.solution.ExerciseTwo;

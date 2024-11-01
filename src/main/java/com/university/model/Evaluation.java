@@ -1,4 +1,4 @@
-package com.university;
+package com.university.model;
 
 import java.util.LinkedHashMap;
 import java.util.List;
