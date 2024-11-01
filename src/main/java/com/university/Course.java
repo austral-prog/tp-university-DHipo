@@ -3,13 +3,17 @@ package com.university;
 import com.university.person.Student;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Course {
     private String m_name;
     private List<String> m_classrooms = new ArrayList<>();
     private List<String> m_teachersName = new ArrayList<>();
     private List<Student> m_students = new ArrayList<>();
+    /// KEY = Exercise Value = Criteria
+    private Map<String, Criteria> m_criteriaType = new HashMap<>();
 
     /* ----- CONSTRUCTOR ----- */
     public Course(String _name) {
@@ -18,13 +22,25 @@ public class Course {
 
     /* ----- GETTERS ----- */
 
-    public String getName() {return m_name;}
-    public List<String> getClassrooms() {return m_classrooms;}
-    public List<String> getTeachersName() {return m_teachersName;}
-    public List<Student> getStudents() {return m_students;}
+    public String getName() {
+        return m_name;
+    }
+
+    public List<String> getClassrooms() {
+        return m_classrooms;
+    }
+
+    public List<String> getTeachersName() {
+        return m_teachersName;
+    }
+
+    public List<Student> getStudents() {
+        return m_students;
+    }
+
+    public Map<String, Criteria> getCriteriaType() {return m_criteriaType;}
 
     /* ----- SETTERS ----- */
-
     public int addTeacherName(String _TeacherName) {
         if (this.m_teachersName.contains(_TeacherName)) return -1;
 
@@ -44,16 +60,26 @@ public class Course {
         return 1;
     }
 
-    /* ----- PRINT METHODS ----- */
+    /* ----- OVERRIDE METHODS ----- */
     @Override
     public String toString() {
         return String.format(
                 "{" +
-                        "\n\tName: %s" +
-                        "\n\tClassrooms: %s" +
-                        "\n\tTeachers: %s" +
-                        "\n\tStudents (count): %d" +
-                        "\n}\n", m_name, m_classrooms, m_teachersName, m_students.size()
+                    "\n\tName: %s" +
+                    "\n\tClassrooms: %s" +
+                    "\n\tTeachers: %s" +
+                    "\n\tStudents (count): %d" +
+                    "\n\tCriteria: %s" +
+                "\n}\n",
+                m_name, m_classrooms, m_teachersName, m_students.size(), m_criteriaType
         );
+    }
+
+    public List<String> getAproveSubjects() {
+        return List.of();
+    }
+
+    public boolean getStateOfSubject(String subject) {
+
     }
 }

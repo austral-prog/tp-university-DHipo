@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.university.solution.ExerciseOne;
+import com.university.solution.ExerciseThree;
 import com.university.solution.ExerciseTwo;
 import com.university.solution.Solution;
 
@@ -23,9 +24,10 @@ public class App {
         {{
             add(new ExerciseOne(university));
             add(new ExerciseTwo(university));
+            add(new ExerciseThree(university));
         }};
 
-        for (Solution exercise : solutions) exercise.solution();
+        solutions.get(2).solution();
 
     }
 
