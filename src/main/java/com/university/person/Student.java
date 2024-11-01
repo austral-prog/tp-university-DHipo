@@ -40,7 +40,7 @@ public class Student extends Person{
         for (String key : this.m_evaluations.keySet().stream().toList()) {
             Map<String, Float> promedio = new HashMap<>();
             for (String name : m_evaluations.get(key).keySet().stream().toList())
-                promedio.put(name, this.m_evaluations.get(key).get(name).getAverage());
+                promedio.put(name, this.m_evaluations.get(key).get(name).getAverageByType());
             result.put(key, promedio);
         }
         return result;

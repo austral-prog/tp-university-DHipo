@@ -31,7 +31,16 @@ public class Evaluation implements Comparable {
     public String getStudent() { return student; }
     public Map<String, Float> getResults() { return results; }
 
-    public float getAverage()
+    public float getAverage() {
+        float average = 0;
+
+        for (float result : results.values())
+            average += result;
+
+        return average / results.size();
+    }
+
+    public float getAverageByType()
     {
         // types = [FINAL_PRACTICAL_WORK, PRACTICAL_WORK, WRITTEN_EXAM, ORAL_EXAM]
         return switch (this.type)

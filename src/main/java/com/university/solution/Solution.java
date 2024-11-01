@@ -2,10 +2,14 @@ package com.university.solution;
 
 import com.university.University;
 
-public interface Solution {
-    String resourcesPath = "src/main/resources/";
-    enum IndexData {};
-    // con abstract no se pueden hacer funciones estaticas
-    void solution (University university);
-    void exportAsCSV(University university);
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Solution {
+    protected static String resourcesPath = "src/main/resources/";
+    protected static University university;
+    protected static List<String> data = new ArrayList<>();
+    public abstract void solution();
+    public abstract void processData();
+    public abstract void exportAsCSV();
 }

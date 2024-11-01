@@ -9,15 +9,34 @@ import com.university.person.Teacher;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.university.solution.ExerciseOne.IndexData.*;
 
-public class ExerciseOne implements Solution {
+public class ExerciseOne extends Solution {
     /* --- exercise one : Variables --- */
     private static final String solutionFile = resourcesPath.concat("solution.csv");
     private static final String inputFile = resourcesPath.concat("input.csv");
+
+    public ExerciseOne(University university) { this.university = university; }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University _university) {
+        university = _university;
+    }
+
+    public List<String> getData() {
+        return data;
+    }
+
+    public void setData(List<String> _data) {
+        data = _data;
+    }
 
     // Classroom, Subject, Student_Name, Student_Email, Subject_Teacher
     public enum IndexData
@@ -30,30 +49,6 @@ public class ExerciseOne implements Solution {
 
         public final int value;
         IndexData(int value) {this.value = value;}
-    }
-
-    /* --- private : Methods - Exercise One --- */
-    private static boolean extractStudentsWithCourses(University _university)
-    {
-        boolean success = false;
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFile));
-            Map<String, Student> students = _university.getStudents();
-            List<String> sorted = students.keySet().stream().sorted().toList();
-
-            writer.write("Student_Name,Course_Count\n");
-
-            for (String e : sorted)
-                writer.write(String.format("%s,%s\n", e, students.get(e).getCountCourses()));
-
-            writer.close();
-            success = true;
-
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return success;
     }
 
     /* --- public : Methods - Exercise One --- */
@@ -115,32 +110,50 @@ public class ExerciseOne implements Solution {
     }
 
     //todo tengo que implementar una nueva forma de actulizar los datos de la universidad (updateData)
-    public static boolean uploadDataToUniversity(final University _university, List<String> _data)
+    @Override
+    public void processData()
     {
-        if (_data == null || _data.isEmpty()) return false;
+        data = CSVManager.getDataFromFileAsList(inputFile);
 
-        for (String line : _data.subList(1, _data.size()))   updateData(_university, line.split(","));
+        if (data == null) return;
 
-        return true;
+        for (String line : data.subList(1, data.size())) updateData(university, line.split(","));
     }
 
     /** Main solution */
     @Override
-    public void solution (University university) {
-        boolean result = uploadDataToUniversity(university, CSVManager.getDataFromFileAsList(inputFile));
+    public void solution () {
+        System.out.println("Doing exercise one...\n");
+        processData();
 
-        if (!result) return;
+        if (data == null) {
+            System.out.println("Impossible to process the data");
+            return;
+        }
 
-        System.out.print("Data from CSV imported correctly!\n");
-        System.out.println("Writing the solution file...");
-
-        if (!extractStudentsWithCourses(university)) return;
-
-        System.out.println("Writing file was done correctly!");
+        exportAsCSV();
+        System.out.println("Exercise one completed!");
     }
 
     @Override
-    public void exportAsCSV(University university) {
+    public void exportAsCSV()
+    {
+        System.out.print("Exporting the solution into solution.csv file --> ");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFile));
+            Map<String, Student> students = university.getStudents();
+            List<String> sorted = students.keySet().stream().sorted().toList();
 
+            writer.write("Student_Name,Course_Count\n");
+
+            for (String e : sorted)
+                writer.write(String.format("%s,%s\n", e, students.get(e).getCountCourses()));
+
+            writer.close();
+            System.out.println("Success!");
+        }catch (IOException e) {
+            System.out.println("Error!");
+            System.out.println(e.getMessage());
+        }
     }
 }
