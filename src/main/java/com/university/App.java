@@ -9,6 +9,7 @@ import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseThree;
 import com.university.solution.ExerciseTwo;
 import com.university.solution.Solution;
+import com.university.cli.HandlerCLI;
 
 public class App {
 
@@ -28,8 +29,11 @@ public class App {
             add(new ExerciseThree(university));
         }};
 
-        solutions.get(2).solution();
+		HandlerCLI cli = new HandlerCLI();
 
+		while (!cli.state.equals("exit")){
+			cli.runCLI(null);
+		}
     }
 
     private static void setLog(final boolean _enable)

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.university'
@@ -35,4 +36,9 @@ test {
         html.required.set(true) // HTML report
         junitXml.required.set(true) // XML report
     }
+}
+
+// add the gradle run command
+application {
+    mainClass = 'com.university.App'  // Asegúrate de poner aquí el nombre completo de tu clase principal
 }
