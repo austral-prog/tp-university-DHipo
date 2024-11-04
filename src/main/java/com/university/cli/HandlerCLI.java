@@ -6,19 +6,22 @@ import java.util.Map;
 import com.university.cli.menu.*;
 import com.university.repository.CRUDRepository;
 import com.university.cli.CommandHandler;
+import com.university.model.University;
 
 public class HandlerCLI implements CLI{
-	// key = option value = function that print the option
-	private Map<String, Menu> options = new HashMap<>() {{
-		put("student", new StudentMenu());
-	}};	
-
+	
+  private University university;
 	private CommandHandler cHandler = new CommandHandler();
 	public static String state = "";
 	// Main menu va a ser la escena principal
 	public Menu scene = null;
-
-	public HandlerCLI() {}
+	// key = option value = function that print the option
+	private Map<String, Menu> options = new HashMap<>();
+	
+  public HandlerCLI(University _university) {
+    this.university = _university;
+    this.options.put("student", new StudentMenu(this.university));
+  }
 	
 	public void print() {
 		System.out.printf("----- Main -----\n\nOptions:\n");
@@ -28,12 +31,12 @@ public class HandlerCLI implements CLI{
 	}
     
 	@Override
-    public void runCLI(CRUDRepository<?>[] crudInterfaces) {
-		if (scene == null) print();
-			else scene.print();
-			
+  public void runCLI(CRUDRepository<?>[] crudInterfaces) {
+		if (scene != null) scene.run();
+	  Menu.clearConsole();	
 		if (state.equals("exit")) return;
 		// una vez mostrado el menu, menejo el input
+    print();
 		scene = cHandler.handleInput(options);
 	}
 }

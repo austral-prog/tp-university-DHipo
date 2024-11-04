@@ -9,7 +9,8 @@ import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseThree;
 import com.university.solution.ExerciseTwo;
 import com.university.solution.Solution;
-import com.university.cli.HandlerCLI;
+import com.university.cli.*;
+import com.university.cli.menu.Menu;
 
 public class App {
 
@@ -29,11 +30,15 @@ public class App {
             add(new ExerciseThree(university));
         }};
 
-		HandlerCLI cli = new HandlerCLI();
+        solutions.get(0).solution();
+        CommandHandler.waitUntilKeyPressed();
 
-		while (!cli.state.equals("exit")){
-			cli.runCLI(null);
-		}
+        HandlerCLI cli = new HandlerCLI(university);
+
+		    while (!cli.state.equals("exit")){
+            Menu.clearConsole();
+			      cli.runCLI(null);
+		    }
     }
 
     private static void setLog(final boolean _enable)
