@@ -34,7 +34,6 @@ public class CommandHandler {
 		boolean result = false;
 		if (_options == null) return null;
 		List<String> optionsName = _options.keySet().stream().toList();
-	  System.out.println(optionsName);	
 		System.out.println("NOTE: Type \"exit\" to quit the program.");
 		
 		while(!result) {
@@ -44,8 +43,11 @@ public class CommandHandler {
 			if (!result) System.out.println("Invalid Option! Try again.");
 		}
 		
+    if (input.equals("return"))
+      return null;
+
 		// change the scene
-    if (returns.contains(input))
+    if (input.equals("exit"))
         HandlerCLI.state = "exit";
 		return _options.get(input);
 	}

@@ -11,7 +11,7 @@ public abstract class Menu {
 	protected CommandHandler cHandler = new CommandHandler();
 
   public Menu(University university) {this.university = university;}
-
+  public Runnable getScene() {return scene; }
 	public Map<String, Runnable> getOptions() {return this.options;}
 	
 	public static void clearConsole() {

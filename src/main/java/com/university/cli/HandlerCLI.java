@@ -14,7 +14,7 @@ public class HandlerCLI implements CLI{
 	private CommandHandler cHandler = new CommandHandler();
 	public static String state = "";
 	// Main menu va a ser la escena principal
-	public Menu scene = null;
+	public Menu menu = null;
 	// key = option value = function that print the option
 	private Map<String, Menu> options = new HashMap<>();
 	
@@ -32,11 +32,14 @@ public class HandlerCLI implements CLI{
     
 	@Override
   public void runCLI(CRUDRepository<?>[] crudInterfaces) {
-		if (scene != null) scene.run();
+		while (menu != null) {
+      menu.run();
+      if (menu.getScene() == null) menu = null;
+    }
 	  Menu.clearConsole();	
 		if (state.equals("exit")) return;
 		// una vez mostrado el menu, menejo el input
     print();
-		scene = cHandler.handleInput(options);
+		menu = cHandler.handleInput(options);
 	}
 }
