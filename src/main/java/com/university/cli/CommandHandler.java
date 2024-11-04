@@ -18,9 +18,10 @@ public class CommandHandler {
 	}
 
 	// set the _input variable into a correct _options
-	public Menu handleInput (Map<String, Menu> _options) {
+	public <T> T handleInput (Map<String, T> _options) {
 		boolean result = false;
-		
+		if (_options == null) return null;
+    System.out.println(_options);
 		List<String> optionsName = _options.keySet().stream().toList();
 		
 		System.out.println("NOTE: Type \"exit\" to quit the program.");
@@ -33,6 +34,7 @@ public class CommandHandler {
 		}
 		
 		// change the scene
+    if (input.equals("exit")) return null;
 		return _options.get(input);
 	}
 }
