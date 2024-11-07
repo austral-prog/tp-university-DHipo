@@ -1,4 +1,4 @@
-package com.university.repository;
+package com.university.services;
 
 import com.university.model.Entity;
 

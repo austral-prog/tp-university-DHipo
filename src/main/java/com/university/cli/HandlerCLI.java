@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.university.cli.menu.*;
-import com.university.repository.CRUDRepository;
+import com.university.services.CRUDRepository;
 import com.university.cli.CommandHandler;
 import com.university.model.University;
 

@@ -1,47 +1,37 @@
 package com.university.services;
 
+import com.university.model.University;
+import com.university.services.CRUDRepository;
+
+import com.university.model.Entity;
 import com.university.model.Student;
-import com.university.repository.StudentRepository;
-import com.university.storage.Storage;
 
-import java.util.List;
+public class StudentService implements CRUDRepository {
+    private University university;
 
-public class StudentService implements Service{
-
-    private Storage storage;
-    private StudentRepository studentRepository;
-
-    StudentService(Storage storage) {
-        this.storage = storage;
+    public StudentService (University _university) {
+      this.university = _university;
     }
-
     @Override
-    public void guardar(Student alumno) {
-
+    public void update(int id, Entity entity){
+      return;
     }
-
+    
     @Override
-    public Student obtener(String id) {
-        return null;
+    public Entity read(int id){
+      university.getStudents().values();
+      return null;
     }
-
     @Override
-    public List<Student> obtenerTodos() {
-        return List.of();
+    public void create(Entity entity){
+      if (entity instanceof Student == false) return;
+      Student student = (Student) entity;
+      university.addStudent(student);
     }
-
     @Override
-    public void actualizar(Student alumno) {
-
-    }
-
+    public void delete(int id){return;}
     @Override
-    public void eliminar(String id) {
-
-    }
-
+    public String getIdentifier(){return null;}
     @Override
-    public void saveRepository() {
-
-    }
+    public Class<Entity> getEntityClass() {return null;}
 }

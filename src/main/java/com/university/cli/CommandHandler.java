@@ -51,4 +51,8 @@ public class CommandHandler {
         HandlerCLI.state = "exit";
 		return _options.get(input);
 	}
+
+  public String getLine(){
+    return scanner.nextLine();
+  }
 }

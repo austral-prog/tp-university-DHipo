@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Student implements Entity {
+    private static int counter = 0;
+    private int id = 0;
     private String m_name;
     private String m_email;
     private List<String> m_Courses;
@@ -17,6 +19,8 @@ public class Student implements Entity {
         this.m_email = "None";
         this.m_Courses = new ArrayList<>();
         this.m_evaluations = new HashMap<>();
+        this.id = this.counter;
+        this.counter += 1;
     }
 
     public Student(String _name, String _email) {
@@ -24,6 +28,18 @@ public class Student implements Entity {
         this.m_email = _email;
         this.m_Courses = new ArrayList<>();
         this.m_evaluations = new HashMap<>();
+        this.id = this.counter;
+        this.counter += 1;
+    }
+
+    public Student(Entity _entity)
+    {
+        this.m_name = "None";
+        this.m_email = "None";
+        this.m_Courses = new ArrayList<>();
+        this.m_evaluations = new HashMap<>();
+        this.id = this.counter;
+        this.counter += 1;
     }
 
     /* ----- GETTERS ----- */
@@ -76,8 +92,8 @@ public class Student implements Entity {
     @Override
     public String toString() {
         return String.format(
-                "Name: %s, Email: %s, Courses: %s, Grades: %d",
-                m_name, m_email, m_Courses, m_evaluations.size()
+                "id: %d, Name: %s, Email: %s, Courses: %s, Grades: %d",
+                id, m_name, m_email, m_Courses.size(), m_evaluations.size()
         );
     }
 
@@ -95,7 +111,7 @@ public class Student implements Entity {
 
     @Override
     public int getId() {
-        return 0;
+        return id;
     }
 
     @Override
