@@ -7,11 +7,11 @@ import com.university.model.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TeacherService implements CRUDRepository<Teacher> {
-    private final University university;
-    private final Set<Integer> teachersIDs = new HashSet<>();
+public class TeacherService implements CRUDRepository<Teacher>, Service {
+    private static University university;
+    private static Set<Integer> teachersIDs = new HashSet<>();
 
-    private void updateIDs() {
+    public void updateIDs() {
         teachersIDs.clear();
         university.getTeachers().values().forEach(teacher -> teachersIDs.add(teacher.getId()));
     }
@@ -19,7 +19,7 @@ public class TeacherService implements CRUDRepository<Teacher> {
     public Set<Integer> getTeachersIDs() { return teachersIDs; }
 
     public TeacherService(University _university) {
-        this.university = _university;
+        university = _university;
         updateIDs();
     }
 

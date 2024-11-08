@@ -21,7 +21,7 @@ public class App {
     public static void main(String[] args) {
         University university = new University();
         HandlerCLI cli = new HandlerCLI(university);
-
+        CommandHandler.waitUntilKeyPressed();
         while (!HandlerCLI.state.equals("exit")) {
             HandlerCLI.clearConsole();
             cli.runCLI(null);

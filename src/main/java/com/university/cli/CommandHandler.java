@@ -27,7 +27,7 @@ public class CommandHandler {
         boolean result = false;
         if (_options == null) return null;
         List<String> optionsName = _options.keySet().stream().map(String::toLowerCase).toList();
-        System.out.println("NOTE: Type \"exit\" to quit the program.");
+        System.out.println("NOTE: Type \"exit\" to quit the program or \n \"return\" to go back in the menu.");
 
         while (!result) {
             System.out.print("> ");
@@ -48,16 +48,13 @@ public class CommandHandler {
     public String handleInputI(List<Integer> _options) {
         if (_options == null) return null;
 
-        List<String> sOptions = new ArrayList<>();
-        _options.forEach(e -> sOptions.add(e.toString()));
-
-        return getString(sOptions);
+        return getString(_options.stream().map(Object::toString).toList());
     }
 
     private String getString(List<String> _options) {
         String input = "";
-        System.out.println("NOTE: Type \"return\" to go back in the program.\n");
-        while (!_options.contains(input) || input.equals("return")) {
+        System.out.println("NOTE: Type \"return\" to go back in the menu.\n");
+        while (!(_options.contains(input) || returns.contains(input))) {
             System.out.print("-> ");
             input = scanner.nextLine().toLowerCase();
         }

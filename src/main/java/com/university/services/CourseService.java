@@ -6,12 +6,12 @@ import com.university.model.University;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CourseService implements CRUDRepository<Course> {
-    private final University university;
-    private final Set<Integer> courseIDs = new HashSet<>();
+public class CourseService implements CRUDRepository<Course>, Service {
+    private static University university;
+    private static Set<Integer> courseIDs = new HashSet<>();
 
     // Método para actualizar el conjunto de IDs de cursos actuales en la universidad
-    private void updateIDs() {
+    public void updateIDs() {
         courseIDs.clear();
         university.getCourses().values().forEach(course -> courseIDs.add(course.getId()));
     }
@@ -19,7 +19,7 @@ public class CourseService implements CRUDRepository<Course> {
     public Set<Integer> getCourseIDs() { return courseIDs; }
 
     public CourseService(University _university) {
-        this.university = _university;
+        university = _university;
         updateIDs();
     }
 

@@ -20,6 +20,8 @@ public class TeacherMenu extends Menu {
 		put("show all", () -> showAllStudents());
 	}};
 
+	public TeacherService getService() {return sTeacher;}
+
 	public TeacherMenu(University _university) {
 		super(_university);
 		sTeacher = new TeacherService(_university);
@@ -60,7 +62,7 @@ public class TeacherMenu extends Menu {
 		String input = cHandler.handleInputI(sTeacher.getTeachersIDs().stream().toList());
 
 		HandlerCLI.clearConsole();
-		if (sTeacher.read(Integer.parseInt(input)) instanceof Teacher)
+		if (sTeacher.read(Integer.parseInt(input)) != null)
 			System.out.printf("%s", sTeacher.read(Integer.parseInt(input)));
 	}
 

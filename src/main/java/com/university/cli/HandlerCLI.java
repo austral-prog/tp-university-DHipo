@@ -10,6 +10,7 @@ import com.university.model.University;
 import com.university.solution.ExerciseOne;
 import com.university.solution.ExerciseThree;
 import com.university.solution.ExerciseTwo;
+import com.university.services.Service;
 
 public class HandlerCLI implements CLI {
 
@@ -57,6 +58,11 @@ public class HandlerCLI implements CLI {
         }
         clearConsole();
         if (state.equals("exit")) return;
+        for(String key : options.keySet())
+        {
+            if (key.equals("exercise")) continue;
+            options.get(key).getService().updateIDs();
+        }
         // una vez mostrado el menu, menejo el input
         print();
         menu = cHandler.handleInput(options);

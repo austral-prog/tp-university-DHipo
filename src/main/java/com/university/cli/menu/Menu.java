@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.university.model.University;
 import com.university.cli.CommandHandler;
+import com.university.services.Service;
 
 public abstract class Menu {
     protected University university = null;
@@ -15,6 +16,8 @@ public abstract class Menu {
     public Menu(University university) {
         this.university = university;
     }
+
+    public Service getService() {return null;};
 
     public Runnable getScene() {
         return scene;

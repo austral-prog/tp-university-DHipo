@@ -20,6 +20,8 @@ public class CourseMenu extends Menu {
         put("show all", () -> showAllCourses());
     }};
 
+    public CourseService getService() {return sCourse;}
+
     public CourseMenu(University _university) {
         super(_university);
         sCourse = new CourseService(_university);
