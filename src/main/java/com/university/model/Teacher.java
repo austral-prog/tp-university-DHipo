@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Teacher implements Entity {
+    private static int counter = 0;
+    private int id;
     private List<String> m_courses = new ArrayList<String>();
     private List<String> m_subjects = new ArrayList<String>();
     private List<String> m_students = new ArrayList<String>();
@@ -13,6 +15,8 @@ public class Teacher implements Entity {
     public Teacher (final String _name)
     {
         m_name = _name;
+        this.id = counter;
+        counter++;
     }
 
     /* ----- GETTERS ----- */
@@ -36,13 +40,16 @@ public class Teacher implements Entity {
         return String.format(
                 """
                 {
+                id: %d
                 \tName: %s
                 \tSubjects: %s
                 \tCourses: %s
                 \tStudents: %s
                 }
                 """,
-                m_name, m_subjects.stream().sorted().toList(), m_courses.stream().sorted().toList(), m_students.stream().sorted().toList()
+                this.id, m_name, m_subjects.stream().sorted().toList(),
+                m_courses.stream().sorted().toList(),
+                m_students.stream().sorted().toList()
         );
     }
 
@@ -53,11 +60,9 @@ public class Teacher implements Entity {
 
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 
     @Override
-    public void setId(int id) {
-
-    }
+    public void setId(int id) {this.id = id;}
 }

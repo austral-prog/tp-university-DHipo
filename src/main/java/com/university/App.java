@@ -14,42 +14,29 @@ import com.university.cli.menu.Menu;
 
 public class App {
 
-    static
-    {
+    static {
         setLog(true);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         University university = new University();
-
-        List<Solution> solutions = new ArrayList<>()
-        {{
-            add(new ExerciseOne(university));
-            add(new ExerciseTwo(university));
-            add(new ExerciseThree(university));
-        }};
-
-        solutions.get(0).solution();
-        CommandHandler.waitUntilKeyPressed();
-
         HandlerCLI cli = new HandlerCLI(university);
 
-		    while (!cli.state.equals("exit")){
-            Menu.clearConsole();
-			      cli.runCLI(null);
-		    }
+        while (!HandlerCLI.state.equals("exit")) {
+            HandlerCLI.clearConsole();
+            cli.runCLI(null);
+        }
     }
 
-    private static void setLog(final boolean _enable)
-    {
+    private static void setLog(final boolean _enable) {
         if (_enable) {
             System.setOut(System.out);
             return;
         }
 
         System.setOut(new PrintStream(new java.io.OutputStream() {
-            public void write(int b) {}
+            public void write(int b) {
+            }
         }));
     }
 }

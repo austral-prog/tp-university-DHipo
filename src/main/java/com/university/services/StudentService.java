@@ -1,37 +1,67 @@
 package com.university.services;
 
-import com.university.model.University;
-import com.university.services.CRUDRepository;
-
-import com.university.model.Entity;
 import com.university.model.Student;
+import com.university.model.University;
 
-public class StudentService implements CRUDRepository {
-    private University university;
+import java.util.HashSet;
+import java.util.Set;
 
-    public StudentService (University _university) {
-      this.university = _university;
+public class StudentService implements CRUDRepository<Student> {
+    private final University university;
+    private final Set<Integer> studentsIDs = new HashSet<>();
+
+    // Actualiza el conjunto de IDs de los estudiantes actuales en la universidad
+    private void updateIDs() {
+        studentsIDs.clear();
+        university.getStudents().values().forEach(student -> studentsIDs.add(student.getId()));
     }
-    @Override
-    public void update(int id, Entity entity){
-      return;
+
+    public Set<Integer> getStudentsIDs() { return studentsIDs; }
+
+    public StudentService(University _university) {
+        this.university = _university;
+        updateIDs();
     }
-    
+
     @Override
-    public Entity read(int id){
-      university.getStudents().values();
-      return null;
+    public void update(int id, Student student) {
+        // Verifica que el ID exista y que el estudiante no sea nulo
+        if (!studentsIDs.contains(id) || student == null) return;
+
+        // Actualiza el estudiante en la universidad usando su nombre como clave
+        university.getStudents().put(student.getName(), student);
+        updateIDs(); // Actualiza la lista de IDs
     }
+
     @Override
-    public void create(Entity entity){
-      if (entity instanceof Student == false) return;
-      Student student = (Student) entity;
-      university.addStudent(student);
+    public Student read(int id) {
+        for (Student student : university.getStudents().values()) {
+            if (student.getId() == id) return student;
+        }
+        return null;
     }
+
     @Override
-    public void delete(int id){return;}
+    public void create(Student student) {
+        if (student == null) return;
+        university.addStudent(student);
+        updateIDs();
+    }
+
     @Override
-    public String getIdentifier(){return null;}
+    public void delete(int id) {
+        if (!studentsIDs.contains(id)) return;
+        university.getStudents().values().removeIf(student -> student.getId() == id);
+        updateIDs();
+    }
+
     @Override
-    public Class<Entity> getEntityClass() {return null;}
+    public String getIdentifier() {
+        return "Student";
+    }
+
+    @Override
+    public Class<Student> getEntityClass() {
+        return Student.class;
+    }
 }

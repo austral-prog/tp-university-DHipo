@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Course {
+public class Course implements Entity {
+    private static int counter = 0;
+    private int id;
     private String m_name;
     private List<String> m_classrooms = new ArrayList<>();
     private List<String> m_teachersName = new ArrayList<>();
@@ -16,6 +18,8 @@ public class Course {
     /* ----- CONSTRUCTOR ----- */
     public Course(String _name) {
         this.m_name = _name;
+        this.id = counter;
+        counter++;
     }
 
     /* ----- GETTERS ----- */
@@ -63,12 +67,13 @@ public class Course {
     public String toString() {
         return String.format(
                 "{" +
+                        "id:%d" +
                     "\n\tName: %s" +
                     "\n\tClassrooms: %s" +
                     "\n\tTeachers: %s" +
                     "\n\tStudents (count): %d" +
                     "\n\tCriteria: %s" +
-                "\n}\n",
+                "\n}\n",this.id,
                 m_name, m_classrooms, m_teachersName, m_students.size(), m_criteriaType
         );
     }
@@ -79,5 +84,15 @@ public class Course {
 
     public boolean getStateOfSubject(String subject) {
      return false;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }
