@@ -40,6 +40,14 @@ public class Criteria {
         m_criteriaType = CriteriaType.valueOf(criteriaType);
     }
 
+    public boolean getStateOfCriteria(float grade) {
+        switch (m_criteriaType) {
+            case AVERAGE_ABOVE_VALUE:   return grade > this.grade;
+            case MAX_ABOVE_VALUE:   return grade <= this.grade; // re mala onda
+            case MIN_ABOVE_VALUE:   return grade >= this.grade;
+            default:return false;
+        }
+    }
     @Override
     public String toString() {
         return String.format(" {criteriaType= %s, grade= %.2f}", m_criteriaType, grade);

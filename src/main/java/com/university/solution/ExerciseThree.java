@@ -2,10 +2,15 @@ package com.university.solution;
 
 import com.university.model.Course;
 import com.university.model.Criteria;
+import com.university.model.Student;
 import com.university.model.University;
 import com.university.csv.CSVManager;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -75,5 +80,21 @@ public class ExerciseThree extends Solution{
     }
 
     @Override
-    public void exportAsCSV() {return;}
+    public void exportAsCSV() {
+        System.out.print("Exporting the solution into solution_3.csv file --> ");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFile));
+            Map<String, Course> courses = university.getCourses();
+
+            writer.write("Course,Criteria\n");
+            for (Course course : courses.values())
+                writer.write(String.format("%s,%s\n", course.getName(), course.getCriteriaType()));
+
+            writer.close();
+            System.out.println("Success!");
+        }catch (IOException e) {
+            System.out.println("Error!");
+            System.out.println(e.getMessage());
+        }
+    }
 }
